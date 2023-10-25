@@ -1,10 +1,12 @@
+import hera
+
 from hera.workflows import DAG, Steps, Workflow, WorkflowsService, script
 from hera.shared import global_config
-#global_config.host = "https://localhost:2746"
+global_config.host = "https://localhost:2746"
 # Copy token value after "Bearer" from the `argo auth token` command
-#global_config.token = ""  
+global_config.token = ""  
 # global_config.image = "<your-image-repository>/python:3.8"  # Set the image if you cannot access "python:3.8" via Docker Hub
-#global_config.verify_ssl = False
+global_config.verify_ssl = False
 
 @script()
 def flip():
@@ -26,7 +28,7 @@ def tails():
 
 with Workflow(generate_name="coinflip-", 
                 entrypoint="d",
-                service_account_name="jenkins",
+                service_account_name="hera",
                 namespace="argo",
               ) as w:
     with DAG(name="d") as s:

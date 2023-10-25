@@ -1,10 +1,10 @@
 kubectl apply -f role.yaml
-kubectl create -n argo sa jenkins
-kubectl create -n argo rolebinding jenkins --role=jenkins --serviceaccount=argo:jenkins
+kubectl create -n argo sa hera
+kubectl create -n argo rolebinding hera --role=hera --serviceaccount=argo:hera
 
 kubectl apply -f secret.yaml
 
-ARGO_TOKEN="Bearer $(kubectl get secret -n argo jenkins.service-account-token -o=jsonpath='{.data.token}' | base64 --decode)"
+ARGO_TOKEN="Bearer $(kubectl get secret -n argo hera.service-account-token -o=jsonpath='{.data.token}' | base64 --decode)"
 echo $ARGO_TOKEN
 
 export ARGO_SERVER='localhost:2746'
