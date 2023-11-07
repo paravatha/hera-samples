@@ -1,11 +1,10 @@
-import hera
-
+from hera.auth import ArgoCLITokenGenerator
 from hera.shared import global_config
-global_config.host = "https://localhost:2746"
-# Copy token value after "Bearer" from the `argo auth token` command
-global_config.token = ""  
-# global_config.image = "<your-image-repository>/python:3.8"  # Set the image if you cannot access "python:3.8" via Docker Hub
+
 global_config.verify_ssl = False
+global_config.host = "https://localhost:2746"
+global_config.token = ArgoCLITokenGenerator
+
 
 """This example showcases how to run PySpark within Hera / Argo Workflows!
 
@@ -15,7 +14,7 @@ compares a regular Pandas dataframe with a Spark dataframe. Inspired by: https:/
 from hera.workflows import DAG, Resources, Workflow, script
 
 
-@script(image="jupyter/pyspark-notebook:latest", resources=Resources(cpu_request=4, memory_request="8Gi"))
+@script(image="jupyter/pyspark-notebook:latest", resources=Resources(cpu_request=0.5, memory_request="1Gi"))
 def spark(n: int) -> None:
     import random
     import subprocess
@@ -63,7 +62,7 @@ with Workflow(generate_name="spark-",
                 namespace="argo",
               ) as w:
     with DAG(name="d"):
-        for i, n in enumerate([1_000, 10_000, 100_000, 1_000_000, 10_000_000, 100_000_000]):
+        for i, n in enumerate([1_000, 10_000, 100_000]):
             spark(name="spark-{i}".format(i=i), arguments={"n": n})
 
 w.create()

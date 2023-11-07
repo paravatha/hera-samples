@@ -1,12 +1,11 @@
-import hera
-
+from hera.auth import ArgoCLITokenGenerator
 from hera.workflows import DAG, Steps, Workflow, WorkflowsService, script
 from hera.shared import global_config
-global_config.host = "https://localhost:2746"
-# Copy token value after "Bearer" from the `argo auth token` command
-global_config.token = ""  
-# global_config.image = "<your-image-repository>/python:3.8"  # Set the image if you cannot access "python:3.8" via Docker Hub
+
 global_config.verify_ssl = False
+global_config.host = "https://localhost:2746"
+global_config.token = ArgoCLITokenGenerator
+
 
 @script()
 def flip():
