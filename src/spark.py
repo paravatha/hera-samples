@@ -62,7 +62,7 @@ with Workflow(generate_name="spark-",
                 namespace="argo",
               ) as w:
     with DAG(name="d"):
-        for i, n in enumerate([1_000, 10_000, 100_000]):
+        for i, n in enumerate([1_000, 10_000]):
             spark(name="spark-{i}".format(i=i), arguments={"n": n})
 
 w.create()

@@ -1,0 +1,4 @@
+spacy==3.7.2
+hera==5.11.0rc1
+ipykernel==6.27.1
+ipython==8.18.1
