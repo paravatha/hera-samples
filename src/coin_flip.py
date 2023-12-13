@@ -1,6 +1,7 @@
 from hera.auth import ArgoCLITokenGenerator
 from hera.workflows import DAG, Steps, Workflow, WorkflowsService, script
 from hera.shared import global_config
+from pydantic import BaseModel
 
 global_config.verify_ssl = False
 global_config.host = "https://localhost:2746"
